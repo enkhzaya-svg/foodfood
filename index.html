@@ -117,10 +117,6 @@
                     <span class="text-2xl">📋</span>
                 </button>
             </div>
-            
-            <button onclick="showScreen('screen-results')" class="mt-8 text-white/80 hover:text-white underline font-semibold transition-colors">
-                Шууд үр дүн харах 👀
-            </button>
         </section>
 
         <!-- ДЭЛГЭЦ 1.5: ХӨТӨЛБӨР (Agenda) -->
@@ -265,43 +261,32 @@
                 <div class="absolute inset-0 bg-white/30 rounded-full blur-xl animate-pulse"></div>
             </div>
             <h2 class="text-3xl font-black mb-2 animate-pulse-fast drop-shadow-lg">Тогоонд хийж байна...</h2>
-            <p class="text-white/80 font-semibold text-lg">Таны саналыг бүртгэж байна 🪄</p>
+            <p class="text-white/80 font-semibold text-lg">Таны саналыг Google Sheet рүү илгээж байна 🪄</p>
         </section>
 
-        <!-- ДЭЛГЭЦ 4: ҮР ДҮН (Results Dashboard) -->
-        <section id="screen-results" class="app-screen flex-col w-full max-w-lg mx-auto h-[80vh] sm:h-[85vh]">
-            
-            <div class="flex justify-between items-end mb-6 px-2 fade-in-up">
-                <div>
-                    <h2 class="text-3xl font-black drop-shadow-lg">Нийт саналууд</h2>
-                    <p class="text-white/90 font-semibold">Хамгийн сүүлийн үеийн байдлаар</p>
+        <!-- ДЭЛГЭЦ 3.5: АМЖИЛТТАЙ ИЛГЭЭСЭН БАЯРЫН ДЭЛГЭЦ (Success) -->
+        <section id="screen-success" class="app-screen flex-col items-center justify-center w-full max-w-md mx-auto text-center bounce-in">
+            <div class="glass-card w-full rounded-3xl p-8 relative overflow-hidden text-gray-800 shadow-2xl flex flex-col items-center">
+                <div class="text-7xl mb-4 animate-bounce">🎉</div>
+                <h2 class="text-3xl font-black text-rose-500 mb-2 leading-tight">
+                    Баяр хүргэе, дууслаа!
+                </h2>
+                <div class="inline-flex items-center gap-2 bg-rose-50 text-rose-700 px-4 py-2 rounded-full font-black text-lg my-3 shadow-inner">
+                    <span>😋</span> Амтархан хоолондоо ороорой! <span>🍽️</span>
                 </div>
-                <button onclick="resetToHome()" class="bg-white/20 hover:bg-white/40 text-white p-3 rounded-full backdrop-blur-sm transition-all shadow-sm" title="Шинэ санал өгөх">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
-                </button>
-            </div>
+                <p class="text-gray-500 font-semibold text-sm mb-6">
+                    Таны санал Google Sheet хүснэгтэд амжилттай бүртгэгдлээ.
+                </p>
 
-            <div class="glass-card flex-1 rounded-3xl p-4 sm:p-6 flex flex-col overflow-hidden fade-in-up" style="animation-delay: 0.2s;">
-                
-                <div class="flex justify-between items-center mb-4 pb-4 border-b border-gray-200/50">
-                    <span class="text-gray-800 font-bold text-lg">Санал өгсөн: <span id="totalVotesCount" class="text-rose-500 font-black text-2xl ml-1">0</span></span>
-                    <div id="resultsSpinner" class="flex items-center text-sm text-gray-500 font-semibold">
-                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-rose-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                        Уншиж байна...
-                    </div>
+                <div class="flex flex-col gap-3 w-full">
+                    <button onclick="showScreen('screen-agenda')" class="w-full bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl hover:scale-102 transition-all flex items-center justify-center gap-2">
+                        <span>Үйл ажиллагааны хөтөлбөр харах</span>
+                        <span class="text-xl">📋</span>
+                    </button>
+                    <button onclick="resetToHome()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-2xl transition-colors">
+                        Нүүр хуудас руу буцах
+                    </button>
                 </div>
-
-                <!-- Урсдаг жагсаалт -->
-                <div id="votesListContainer" class="flex-1 overflow-y-auto space-y-4 pr-2 pb-4">
-                    <!-- Загвар (Empty state) -->
-                    <div id="emptyState" class="h-full flex flex-col items-center justify-center text-gray-400 opacity-60">
-                        <div class="text-5xl mb-3 grayscale">🏜️</div>
-                        <p class="font-bold">Одоогоор санал алга байна.</p>
-                        <p class="text-sm mt-1">Хамгийн түрүүнд санал өгөөрэй!</p>
-                    </div>
-                    <!-- Энд картууд орно -->
-                </div>
-
             </div>
         </section>
 
@@ -320,20 +305,11 @@
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // Таны өгсөн Google Apps Script Web App URL
+        const GOOGLE_SHEET_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwBvGygeGM9LyZzvkG63sbgaZOyxPG4BrFp4CExgzkzlz1GjYe3RQpLHmjGFi3q3WEV9w/exec';
 
-        // GitHub Pages болон олон хэрэглэгчийн санал нэг дор цугларах тохиргоо
-        // ТА ТАЙЛБАР: Хэрэв та өөрийн Firebase төслийн тохиргоог хийвэл энд оруулж болно.
-        // Одоогийн байдлаар гацахгүйгээр багийн дунд шууд ажиллах нээлттэй үүлэн сервертэй холбосон байна.
-        const CLOUD_NAMESPACE = 'lunch_vote_foodfood_team';
-        const CLOUD_API_URL = 'https://api.restful-api.dev/objects';
-
-        let localMemoryVotes = [];
-
-        // UI Elements
-        const screens = ['screen-welcome', 'screen-agenda', 'screen-wizard', 'screen-loading', 'screen-results'];
+        // UI Дэлгэцүүд (Нийт саналууд дэлгэцийг хассан)
+        const screens = ['screen-welcome', 'screen-agenda', 'screen-wizard', 'screen-loading', 'screen-success'];
         const connectionStatus = document.getElementById('connectionStatus');
         
         // Wizard Elements
@@ -343,37 +319,22 @@
         let currentStep = 0;
         const maxSteps = 5;
 
-        // Listeners Data
-        const votesListContainer = document.getElementById('votesListContainer');
-        const totalVotesCount = document.getElementById('totalVotesCount');
-        const emptyState = document.getElementById('emptyState');
-        const resultsSpinner = document.getElementById('resultsSpinner');
-
         // Modal Elements
         const customModal = document.getElementById('customModal');
         const modalContainer = customModal.querySelector('div');
 
-        // Local Storage-д хадгалагдсан хэрэглэгчийн ID
-        let myClientId = sessionStorage.getItem('food_voter_id');
-        if (!myClientId) {
-            myClientId = 'user_' + Math.random().toString(36).substring(2, 9);
-            sessionStorage.setItem('food_voter_id', myClientId);
-        }
-
-        // --- UI ХЯНАЛТЫН ФУНКЦУУД ---
-
         window.showScreen = (screenId) => {
             screens.forEach(id => {
                 const el = document.getElementById(id);
-                if (id === screenId) {
-                    el.classList.add('active');
-                } else {
-                    el.classList.remove('active');
+                if (el) {
+                    if (id === screenId) {
+                        el.classList.add('active');
+                    } else {
+                        el.classList.remove('active');
+                    }
                 }
             });
-            if (screenId === 'screen-results') {
-                fetchCloudVotes();
-            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
         window.showModal = (title, message, isError = false) => {
@@ -405,8 +366,6 @@
             wizardError.classList.remove('opacity-0');
             setTimeout(() => wizardError.classList.add('opacity-0'), 3000);
         }
-
-        // --- WIZARD (АЛХАМТ АСУУЛГА) ЛОГИК ---
 
         window.startWizard = () => {
             currentStep = 0;
@@ -467,45 +426,7 @@
             showScreen('screen-welcome');
         };
 
-        // --- ДАТА ХАДГАЛАХ & ТАТАХ ҮЙЛДЭЛ (ОЛОН ТӨХӨӨРӨМЖ БОЛОН GITHUB PAGES ДЭЭР ЗОРИУЛСАН) ---
-
-        async function fetchCloudVotes() {
-            resultsSpinner.style.display = 'flex';
-            try {
-                // Серверээс бүх саналуудыг татаж авах
-                const res = await fetch(`${CLOUD_API_URL}`);
-                if (!res.ok) throw new Error('Сүлжээний алдаа');
-                const allObjects = await res.json();
-                
-                // Зөвхөн манай хоолны аппын өгөгдлийг шүүнэ
-                const filtered = allObjects
-                    .filter(item => item && item.name === CLOUD_NAMESPACE && item.data)
-                    .map(item => ({
-                        id: item.id,
-                        name: item.data.userName,
-                        restaurant: item.data.restaurant,
-                        date: item.data.date,
-                        time: item.data.time,
-                        notes: item.data.notes,
-                        userId: item.data.userId,
-                        timestamp: item.data.timestamp || 0
-                    }));
-
-                // Шинэ нь дээрээ гарах эрэмбэ
-                filtered.sort((a, b) => b.timestamp - a.timestamp);
-                
-                // Нийт жагсаалт харуулах
-                renderVotes(filtered);
-                connectionStatus.innerHTML = '<span class="text-green-300 mr-1">●</span> Бэлэн';
-            } catch (err) {
-                console.warn('Сервер холбогдох боломжгүй, түр санах ойн өгөгдлийг харуулж байна:', err);
-                renderVotes(localMemoryVotes);
-                connectionStatus.innerHTML = '<span class="text-yellow-300 mr-1">●</span> Офлайн';
-            } finally {
-                resultsSpinner.style.display = 'none';
-            }
-        }
-
+        // Саналыг зөвхөн Google Sheet рүү илгээх
         window.submitVote = async () => {
             const name = document.getElementById('input-name').value.trim();
             const restaurant = document.getElementById('input-restaurant').value.trim();
@@ -520,120 +441,36 @@
 
             showScreen('screen-loading');
 
-            const votePayload = {
-                name: CLOUD_NAMESPACE,
-                data: {
-                    userName: name,
-                    restaurant: restaurant,
-                    date: date,
-                    time: time,
-                    notes: notes,
-                    userId: myClientId,
-                    timestamp: Date.now()
-                }
+            const newVote = {
+                name,
+                restaurant,
+                date,
+                time,
+                notes,
+                timestamp: new Date().toLocaleString('mn-MN', { timeZone: 'Asia/Ulaanbaatar' })
             };
 
+            // Google Apps Script Webhook руу шууд илгээх
             try {
-                // Үүлэн санд нийтийн өгөгдөл болгон илгээж хадгална
-                const response = await fetch(CLOUD_API_URL, {
+                await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(votePayload)
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(newVote)
                 });
-
-                if (!response.ok) throw new Error('Хадгалж чадсангүй');
-            } catch (error) {
-                console.error("Cloud save error:", error);
-                // Хэрэв сүлжээ саатвал локал жагсаалтад нэмнэ
-                localMemoryVotes.unshift({
-                    id: 'local_' + Date.now(),
-                    name,
-                    restaurant,
-                    date,
-                    time,
-                    notes,
-                    userId: myClientId,
-                    timestamp: Date.now()
-                });
+            } catch (e) {
+                console.warn("Sheet рүү илгээх үед гарсан сүлжээний мэдээлэл:", e);
             }
 
-            setTimeout(async () => {
-                await fetchCloudVotes();
-                showScreen('screen-results');
+            // Догдлом анимейшны дараа баяр хүргэх дэлгэц рүү шилжих
+            setTimeout(() => {
+                showScreen('screen-success');
             }, 1200);
         };
 
-        function renderVotes(votes) {
-            totalVotesCount.textContent = votes.length;
-
-            if (votes.length === 0) {
-                emptyState.style.display = 'flex';
-                votesListContainer.innerHTML = '';
-                votesListContainer.appendChild(emptyState);
-                return;
-            }
-
-            emptyState.style.display = 'none';
-            votesListContainer.innerHTML = '';
-            
-            votes.forEach((vote, index) => {
-                const el = document.createElement('div');
-                const delay = Math.min(index * 0.08, 0.4);
-                
-                el.className = 'bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex flex-col gap-3 fade-in-up hover:shadow-md transition-shadow relative overflow-hidden text-gray-800';
-                el.style.animationDelay = `${delay}s`;
-
-                const colors = ['bg-blue-100 text-blue-700', 'bg-green-100 text-green-700', 'bg-purple-100 text-purple-700', 'bg-orange-100 text-orange-700', 'bg-rose-100 text-rose-700'];
-                const colorClass = colors[(vote.name ? vote.name.length : 0) % colors.length];
-
-                let notesHtml = '';
-                if (vote.notes) {
-                    notesHtml = `<div class="bg-gray-50 rounded-xl p-3 text-sm text-gray-600 italic border border-gray-100 break-words">
-                        <span class="text-gray-400 not-italic mr-1">💬</span>${escapeHTML(vote.notes)}
-                    </div>`;
-                }
-
-                const isMe = vote.userId === myClientId;
-                const meBadge = isMe ? `<span class="absolute top-0 right-0 bg-rose-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg">ТАНЫ САНАЛ</span>` : '';
-
-                el.innerHTML = `
-                    ${meBadge}
-                    <div class="flex justify-between items-start gap-2">
-                        <div>
-                            <h3 class="font-black text-gray-800 text-xl leading-none mb-1 break-words">${escapeHTML(vote.restaurant)}</h3>
-                            <div class="flex items-center text-gray-500 text-sm font-semibold mt-1">
-                                <span class="bg-gray-100 p-1 rounded-full mr-2 text-xs">👤</span>
-                                ${escapeHTML(vote.name)}
-                            </div>
-                        </div>
-                        <div class="${colorClass} px-3 py-2 rounded-xl font-black text-sm flex flex-col items-end justify-center shadow-inner flex-shrink-0 gap-1 text-right min-w-[95px]">
-                            <div class="flex items-center gap-1"><span class="opacity-60 text-[10px]">📅</span> ${escapeHTML(vote.date || '-')}</div>
-                            <div class="flex items-center gap-1"><span class="opacity-60 text-[10px]">⏰</span> ${escapeHTML(vote.time)}</div>
-                        </div>
-                    </div>
-                    ${notesHtml}
-                `;
-                votesListContainer.appendChild(el);
-            });
+        if (connectionStatus) {
+            connectionStatus.innerHTML = '<span class="text-green-300 mr-1">●</span> Бэлэн';
         }
-
-        function escapeHTML(str) {
-            if (!str) return '';
-            return str.replace(/[&<>'"]/g, tag => ({
-                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
-            }[tag]));
-        }
-
-        // Автоматаар 15 секунд тутамд шинэ саналуудыг татаж шинэчилнэ
-        setInterval(() => {
-            const resultsScreen = document.getElementById('screen-results');
-            if (resultsScreen && resultsScreen.classList.contains('active')) {
-                fetchCloudVotes();
-            }
-        }, 15000);
-
-        // Анх ачааллах
-        fetchCloudVotes();
     </script>
 </body>
 </html>
